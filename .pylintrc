@@ -1,0 +1,8 @@
+[MESSAGES CONTROL]
+disable=R0903, C2801, R0901
+
+[REPORTS]
+reports=no
+
+[LOGGING]
+logging-modules=logging

@@ -3,12 +3,16 @@
 from typing import Any, Union
 
 class BaseNode:
-    """
-        `Node` parent object class representing the function arguments
-        and its childrens.
-    """
+    """`Node` parent object class representing the function arguments
+        and its childrens."""
 
     def __init__(self, parent: Union["BaseNode", None], *args: tuple, **kwargs: dict):
+        """Constructor
+
+        Args:
+            parent (Union[&quot;BaseNode&quot;, None]): _description_
+        """
+
         self.args = args
         self.kwargs = kwargs
         self.parent = parent
@@ -19,22 +23,24 @@ class BaseNode:
         self.name = str(hash(self))
 
 class Node(BaseNode):
-    """
-        Class representing a Graphviz node
-    """
+    """Class representing a Graphviz node"""
 
     @property
     def value(self) -> Any:
-        """
-            Return the node value
+        """Return the node value
+
+        Returns:
+            Any: _description_
         """
 
         return (*self.args, *self.kwargs.items(),)
 
     @property
     def label(self) -> str:
-        """
-            Return the node label
+        """Return the node label
+
+        Returns:
+            str: _description_
         """
 
         ret = list(map(str, self.args))
@@ -50,4 +56,10 @@ class Node(BaseNode):
         return ", ".join(ret)
 
     def __str__(self) -> str:
+        """Return `Node` as a string
+
+        Returns:
+            str: _description_
+        """
+
         return "(" + self.name + ", " + self.label + ")"

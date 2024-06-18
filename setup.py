@@ -1,14 +1,14 @@
-# -*- coding: utf-8 -*-
+"""setup module"""
 
 from setuptools import setup, find_packages
 
-with open('README.md') as f:
+with open('README.md', encoding="utf-8") as f:
     readme = f.read()
 
-with open('LICENSE') as f:
-    license = f.read()
+with open('LICENSE', encoding="utf-8") as f:
+    _license = f.read()
 
-with open('requirements.txt') as f:
+with open('requirements.txt', encoding="utf-8") as f:
     required = f.read().splitlines()
 
 setup(
@@ -20,6 +20,6 @@ setup(
     author='Théo Bori',
     author_email='nagi@tilde.team',
     url='https://github.com/theobori/recursion-digraph',
-    license=license,
+    license=_license,
     packages=find_packages()
 )

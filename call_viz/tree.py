@@ -2,30 +2,28 @@
 
 import graphviz as gv
 
-from typing import Any, Union
-
 from .node import Node
 
 class BaseTree:
-    """
-        `Tree` parent object class
-    """
+    """`Tree` parent object class"""
 
     def __init__(self):
+        """Constructor"""
+
         self._root = Node(None)
         self.__current = self._root
-    
+
     def reset(self):
-        """
-            Reset the `BaseTree` variables (essentially nodes)
-        """
+        """Reset the `BaseTree` variables (essentially nodes)"""
 
         self.__init__()
 
     def __next(self, node: Node):
-        """
-            Add a children node if not exist,
+        """Add a children node if not exist,
             then change the current node to the new node
+
+        Args:
+            node (Node): _description_
         """
 
         # create new node with the current node as parent
@@ -40,27 +38,29 @@ class BaseTree:
         # replace the current
         self.__current = node
 
-    def next(self, *args, **kwargs):
-        """
-            Same as `self._next` but with function arguments
-        """
+    def next(self, *args: tuple, **kwargs: dict):
+        """Same as `self._next` but with function arguments"""
 
         self.__next(Node(None, *args, **kwargs))
 
     @property
     def is_at_root(self) -> bool:
-        """
-            Return if the current node is the root node
+        """Return if the current node is the root node
+
+        Returns:
+            bool: _description_
         """
 
         return self.__current == self._root
-        
+
     def back(self) -> bool:
-        """
-            Update the current node with its parent if it exists
+        """Update the current node with its parent if it exists
+
+        Returns:
+            bool: _description_
         """
 
-        if self.__current.parent == None:
+        if self.__current.parent is None:
             return False
 
         self.__current = self.__current.parent
@@ -68,13 +68,11 @@ class BaseTree:
         return True
 
     def _debug(self):
-        """
-            BFS used to display line by line
-        """
+        """BFS used to display line by line"""
 
         line = [self._root]
 
-        while line:        
+        while line:
             size = len(line)
 
             display = []
@@ -92,38 +90,37 @@ class BaseTree:
                 print(", ".join(map(str, display)))
 
 class Tree(gv.Graph, BaseTree):
-    """
-        Graphviz controller inheriting `BaseTree`
+    """Graphviz controller inheriting `BaseTree`
+
+    Args:
+        gv (_type_): _description_
+        BaseTree (_type_): _description_
     """
 
-    def __init__(self, format="png"):
-        super().__init__(format=format)
+    def __init__(self, _format="png"):
+        super().__init__(format=_format)
 
     def process(self):
-        """
-            Link every node with Graphviz
-        """
+        """Link every node with Graphviz"""
 
         def dfs(node: Node):
-            """
-                Link every node with Graphviz
-            """
+            """Link every node with Graphviz"""
 
             if node.childrens == {}:
                 return
 
-            if node.parent == None:
+            if node.parent is None:
                 for children in node.childrens.values():
                     dfs(children)
 
                 return
-            
+
             self.node(node.name, node.label)
 
             for children in node.childrens.values():
                 self.node(children.name, children.label)
                 self.edge(node.name, children.name)
-                
+
                 dfs(children)
 
         dfs(self._root)
