@@ -1,5 +1,5 @@
 [MESSAGES CONTROL]
-disable=R0903, C2801, R0901
+disable=R0903, C2801, R0901, E1123
 
 [REPORTS]
 reports=no

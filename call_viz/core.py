@@ -1,24 +1,24 @@
 """core module"""
 
-from typing import Callable
+from typing import Callable, Union
 
 from .tree import Tree
 
 def call_viz(
-    filename: str="tree",
-    _format: str="png",
+    filename: Union[str, None]=None,
+    _format: str="svg",
     keep_dot_file: bool=False,
 ):
     """Python decorator that will generate a tree representing
         the function calls with the parameters.
 
     Args:
-        filename (str, optional): _description_. Defaults to "tree".
-        format (str, optional): _description_. Defaults to "png".
-        keep_dot_file (bool, optional): _description_. Defaults to False.
+        filename (str, optional): Output filename. Defaults to "tree".
+        format (str, optional): Output file format. Defaults to "png".
+        keep_dot_file (bool, optional): Keep the DOT format file. Defaults to False.
 
     Returns:
-        _type_: _description_
+        decorator: Decorator function
     """
 
     tree = Tree()
@@ -36,7 +36,7 @@ def call_viz(
 
                 # render show etc
                 tree.render(
-                    filename=filename,
+                    filename=filename or func.__name__,
                     format=_format,
                     cleanup=not keep_dot_file,
                 )

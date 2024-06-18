@@ -1,6 +1,6 @@
 """tree module"""
 
-import graphviz as gv
+import graphviz
 
 from .node import Node
 
@@ -23,16 +23,16 @@ class BaseTree:
             then change the current node to the new node
 
         Args:
-            node (Node): _description_
+            node (Node): Node
         """
 
         # create new node with the current node as parent
         node.parent = self.__current
 
-        value = node.value
+        value = str(node.value)
 
         # set it as a children of the current node
-        if not value in self.__current.childrens:
+        if value not in self.__current.childrens:
             self.__current.childrens[value] = node
 
         # replace the current
@@ -48,7 +48,7 @@ class BaseTree:
         """Return if the current node is the root node
 
         Returns:
-            bool: _description_
+            bool: Is root
         """
 
         return self.__current == self._root
@@ -57,7 +57,7 @@ class BaseTree:
         """Update the current node with its parent if it exists
 
         Returns:
-            bool: _description_
+            bool: Has parent
         """
 
         if self.__current.parent is None:
@@ -89,12 +89,12 @@ class BaseTree:
             if display:
                 print(", ".join(map(str, display)))
 
-class Tree(gv.Graph, BaseTree):
+class Tree(graphviz.Graph, BaseTree):
     """Graphviz controller inheriting `BaseTree`
 
     Args:
-        gv (_type_): _description_
-        BaseTree (_type_): _description_
+        graphviz (graphviz.Graph): graphviz.Graph
+        BaseTree (BaseTree): BaseTree
     """
 
     def __init__(self, _format="png"):

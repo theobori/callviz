@@ -1,6 +1,6 @@
 """node module"""
 
-from typing import Any, Union
+from typing import Union
 
 class BaseNode:
     """`Node` parent object class representing the function arguments
@@ -10,7 +10,7 @@ class BaseNode:
         """Constructor
 
         Args:
-            parent (Union[&quot;BaseNode&quot;, None]): _description_
+            parent (Union[BaseNode, None]): Node parent or None
         """
 
         self.args = args
@@ -20,27 +20,37 @@ class BaseNode:
 
         # Preventing Graphviz to ommit nodes
         # because of duplicate names
-        self.name = str(hash(self))
+        self._name = str(hash(self))
 
 class Node(BaseNode):
     """Class representing a Graphviz node"""
 
     @property
-    def value(self) -> Any:
-        """Return the node value
+    def name(self) -> str:
+        """RNode name getter
 
         Returns:
-            Any: _description_
+            str: Node name
+        """
+
+        return self._name
+
+    @property
+    def value(self) -> tuple:
+        """Node value getter
+
+        Returns:
+            Any: Node value as a tuple
         """
 
         return (*self.args, *self.kwargs.items(),)
 
     @property
     def label(self) -> str:
-        """Return the node label
+        """Node label getter
 
         Returns:
-            str: _description_
+            str: Node label as a string
         """
 
         ret = list(map(str, self.args))
@@ -59,7 +69,7 @@ class Node(BaseNode):
         """Return `Node` as a string
 
         Returns:
-            str: _description_
+            str: Node as a string
         """
 
         return "(" + self.name + ", " + self.label + ")"
