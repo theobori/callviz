@@ -17,6 +17,7 @@ setup(
     install_requires=required,
     description='Recursive function calls visualization using Graphviz',
     long_description=readme,
+    long_description_content_type='text/markdown',
     author='Théo Bori',
     author_email='nagi@tilde.team',
     url='https://github.com/theobori/call_viz',
