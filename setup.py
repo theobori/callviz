@@ -21,5 +21,6 @@ setup(
     author_email='nagi@tilde.team',
     url='https://github.com/theobori/call_viz',
     license=_license,
-    packages=find_packages()
+    packages=find_packages(),
+    include_package_data=True
 )
