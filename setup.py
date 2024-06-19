@@ -19,7 +19,7 @@ setup(
     long_description=readme,
     author='Théo Bori',
     author_email='nagi@tilde.team',
-    url='https://github.com/theobori/recursion-digraph',
+    url='https://github.com/theobori/call_viz',
     license=_license,
     packages=find_packages()
 )
