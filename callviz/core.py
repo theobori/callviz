@@ -5,7 +5,7 @@ from collections import defaultdict
 
 from .tree import Tree
 
-CALL_VIZ_OUTPUT_DIR = "."
+CALLVIZ_OUTPUT_DIR = "."
 
 def set_output_dir(name: str):
     """Set the output directory
@@ -14,11 +14,11 @@ def set_output_dir(name: str):
         name (str): Output directory name
     """
 
-    global CALL_VIZ_OUTPUT_DIR
+    global CALLVIZ_OUTPUT_DIR
 
-    CALL_VIZ_OUTPUT_DIR = name
+    CALLVIZ_OUTPUT_DIR = name
 
-def call_viz(
+def callviz(
     filename: Union[str, None]=None,
     _format: str="svg",
     keep_dot_file: bool=False,
@@ -82,7 +82,7 @@ def call_viz(
                     format=_format,
                     cleanup=not keep_dot_file,
                     view=view,
-                    directory=CALL_VIZ_OUTPUT_DIR
+                    directory=CALLVIZ_OUTPUT_DIR
                 )
 
                 count[key] += 2 if c == 0 else 1

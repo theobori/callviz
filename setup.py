@@ -12,7 +12,7 @@ with open('requirements.txt', encoding="utf-8") as f:
     required = f.read().splitlines()
 
 setup(
-    name='call_viz',
+    name='callviz',
     version='0.1.0',
     install_requires=required,
     description='Recursive function calls visualization using Graphviz',
@@ -20,7 +20,7 @@ setup(
     long_description_content_type='text/markdown',
     author='Théo Bori',
     author_email='nagi@tilde.team',
-    url='https://github.com/theobori/call_viz',
+    url='https://github.com/theobori/callviz',
     license=_license,
     packages=find_packages(),
     include_package_data=True

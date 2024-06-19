@@ -1,6 +1,6 @@
 # Function call visualization
 
-[![lint](https://github.com/theobori/call-viz/actions/workflows/lint.yml/badge.svg)](https://github.com/theobori/call-viz/actions/workflows/lint.yml) [![build](https://github.com/theobori/call-viz/actions/workflows/build.yml/badge.svg)](https://github.com/theobori/call-viz/actions/workflows/build.yml) [![publish](https://github.com/theobori/call_viz/actions/workflows/publish.yml/badge.svg)](https://github.com/theobori/call_viz/actions/workflows/publish.yml)
+[![lint](https://github.com/theobori/callviz/actions/workflows/lint.yml/badge.svg)](https://github.com/theobori/callviz/actions/workflows/lint.yml) [![build](https://github.com/theobori/callviz/actions/workflows/build.yml/badge.svg)](https://github.com/theobori/callviz/actions/workflows/build.yml) [![publish](https://github.com/theobori/callviz/actions/workflows/publish.yml/badge.svg)](https://github.com/theobori/callviz/actions/workflows/publish.yml)
 
 It is a Python decorator that will help you visualizate the function calls, in particular for the recursive ones. Under the hood [Graphviz](https://graphviz.org/) is used to generate the graph.
 
@@ -13,7 +13,7 @@ For the build, you only need the following requirements:
 To install it from [PyPi](https://pypi.org), you can run the following command:
 
 ```bash
-python -m pip install call-viz
+python -m pip install callviz
 ```
 
 ## 🤝 Contribute
@@ -25,16 +25,16 @@ If you want to help the project, you can follow the guidelines in [CONTRIBUTING.
 Here is an example of how you could use the decorator.
 
 ```py
-from call_viz import call_viz
+from callviz import callviz
 
-@call_viz(_format="png", memoization=True, view=True)
+@callviz(_format="png", memoization=True, view=True)
 def fib(n: int):
     if n < 2:
         return n
 
     return fib(n - 2) + fib(n - 1)
 
-@call_viz()
+@callviz()
 def rev(arr, new):
     if arr == []:
         return new
