@@ -10,6 +10,12 @@ For the build, you only need the following requirements:
 
 - [Python](https://www.python.org/downloads/) 3+ (tested with 3.12.4)
 
+To install it from [PyPi](https://pypi.org), you can run the following command:
+
+```bash
+python -m pip install call-viz
+```
+
 ## 🤝 Contribute
 
 If you want to help the project, you can follow the guidelines in [CONTRIBUTING.md](./CONTRIBUTING.md).
