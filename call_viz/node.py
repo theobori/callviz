@@ -2,6 +2,8 @@
 
 from typing import Union, Dict
 
+from copy import deepcopy, Error
+
 MEMOIZATION_ATTR = {
     "style": "filled",
     "fillcolor": "lightgrey",
@@ -18,15 +20,20 @@ class BaseNode:
         *args: tuple,
         **kwargs: dict,
     ):
-        """Constructor
+        """_summary_
 
         Args:
-            parent (Union[BaseNode, None]): Node parent or None
+            parent (Union[BaseNode;, None]): Node parent or None
+            memoization (bool): Tell if the node is memoized
         """
 
         # Arguments
-        self.args = args
-        self.kwargs = kwargs
+        try:
+            self.args = deepcopy(args)
+            self.kwargs = deepcopy(kwargs)
+        except Error:
+            self.args = args
+            self.kwargs = kwargs
 
         # Parent node
         self.parent = parent
