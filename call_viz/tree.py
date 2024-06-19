@@ -10,7 +10,7 @@ class BaseTree:
     def __init__(self):
         """Constructor"""
 
-        self._root = Node(None)
+        self._root = Node(None, False)
         self.__current = self._root
 
     def reset(self):
@@ -26,9 +26,6 @@ class BaseTree:
             node (Node): Node
         """
 
-        # create new node with the current node as parent
-        node.parent = self.__current
-
         value = str(node.value)
 
         # set it as a children of the current node
@@ -38,10 +35,12 @@ class BaseTree:
         # replace the current
         self.__current = node
 
-    def next(self, *args: tuple, **kwargs: dict):
+    def next(self, memoization: bool, *args: tuple, **kwargs: dict):
         """Same as `self._next` but with function arguments"""
 
-        self.__next(Node(None, *args, **kwargs))
+        node = Node(self.__current, memoization, *args, **kwargs)
+
+        self.__next(node)
 
     @property
     def is_at_root(self) -> bool:
@@ -104,7 +103,11 @@ class Tree(graphviz.Graph, BaseTree):
         """Link every node with Graphviz"""
 
         def dfs(node: Node):
-            """Link every node with Graphviz"""
+            """Link every node with Graphviz
+
+            Args:
+                node (Node): Node
+            """
 
             if node.childrens == {}:
                 return
@@ -115,10 +118,12 @@ class Tree(graphviz.Graph, BaseTree):
 
                 return
 
-            self.node(node.name, node.label)
+            # Parent
+            self.node(node.name, node.label, **node.attrs)
 
+            # Childrens
             for children in node.childrens.values():
-                self.node(children.name, children.label)
+                self.node(children.name, children.label, **children.attrs)
                 self.edge(node.name, children.name)
 
                 dfs(children)
