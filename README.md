@@ -27,14 +27,14 @@ Here is an example of how you could use the decorator.
 ```py
 from callviz import callviz
 
-@callviz(_format="png", memoization=True, view=True)
+@callviz(_format="png", memoization=True, open_file=True)
 def fib(n: int):
     if n < 2:
         return n
 
     return fib(n - 2) + fib(n - 1)
 
-@callviz()
+@callviz(show_link_value=False)
 def rev(arr, new):
     if arr == []:
         return new

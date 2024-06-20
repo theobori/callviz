@@ -1,6 +1,6 @@
 """core module"""
 
-from typing import Callable, Union
+from typing import Callable, Union, Any
 from collections import defaultdict
 
 from .tree import Tree
@@ -23,7 +23,10 @@ def callviz(
     _format: str="svg",
     keep_dot_file: bool=False,
     memoization: bool=False,
-    view: bool=False,
+    open_file: bool=False,
+    show_link_value: bool=True,
+    show_node_result: bool=False,
+
 ):
     """Python decorator that will generate a tree representing
         the function calls with the parameters.
@@ -33,7 +36,9 @@ def callviz(
         format (str, optional): Output file format. Defaults to "png".
         keep_dot_file (bool, optional): Keep the DOT format file. Defaults to False.
         memoization (bool, optional): Enable memoization. Defaults to False.
-        view (bool, optional): Open the built tree with the default image viewer. Defaults to False.
+        open_file (bool, optional): Open the built tree with the default image viewer. Defaults to False.
+        show_link_value (bool, optional): Show every node link value. Defaults to True.
+        show_node_result (bool, optional): Show every node result on the node. Defaults to True.
 
     Returns:
         decorator: Decorator function
@@ -44,22 +49,42 @@ def callviz(
     count = defaultdict(int)
 
     def decorator(func: Callable) -> Callable:
-        def inner(*args: tuple, **kwargs: dict):
-            is_cached = False
+        """Decorator
+
+        Args:
+            func (Callable): Function called in the returned function.
+
+        Returns:
+            Callable: Any object with the `__call__` method.
+        """
+
+        def inner(*args: tuple, **kwargs: dict) -> Any:
+            """Decorator inner function.
+
+            Returns:
+                Any: The called function return value
+            """
+
             value = None
             key = str((*args, kwargs,))
 
             if memoization and key in cache:
-                is_cached = True
                 value = cache[key]
+
+            is_cached = not value is None
 
             tree.next(is_cached, *args, **kwargs)
 
-            if is_cached and not value is None:
+            if is_cached:
+                tree.set_return_value(value)
                 tree.back()
+
                 return value
 
+            # Function return value
             value = func(*args, **kwargs)
+
+            tree.set_return_value(value)
 
             if memoization:
                 cache[key] = value
@@ -69,7 +94,7 @@ def callviz(
             # End
             if tree.is_at_root:
                 # Links every Graphviz node
-                tree.process()
+                tree.process(show_node_result, show_link_value)
 
                 key = filename or func.__name__
                 c = count[key]
@@ -81,7 +106,7 @@ def callviz(
                     filename=key,
                     format=_format,
                     cleanup=not keep_dot_file,
-                    view=view,
+                    view=open_file,
                     directory=CALLVIZ_OUTPUT_DIR
                 )
 

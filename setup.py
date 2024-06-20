@@ -13,7 +13,7 @@ with open('requirements.txt', encoding="utf-8") as f:
 
 setup(
     name='callviz',
-    version='0.1.0',
+    version='0.2.0',
     install_requires=required,
     description='Recursive function calls visualization using Graphviz',
     long_description=readme,

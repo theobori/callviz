@@ -2,7 +2,7 @@
 
 from typing import Union, Dict
 
-from copy import deepcopy, Error
+from .utility import try_get_copy
 
 MEMOIZATION_ATTR = {
     "style": "filled",
@@ -28,12 +28,8 @@ class BaseNode:
         """
 
         # Arguments
-        try:
-            self.args = deepcopy(args)
-            self.kwargs = deepcopy(kwargs)
-        except Error:
-            self.args = args
-            self.kwargs = kwargs
+        self.args = try_get_copy(args)
+        self.kwargs = try_get_copy(kwargs)
 
         # Parent node
         self.parent = parent
@@ -47,6 +43,9 @@ class BaseNode:
 
         # Memoization
         self.memoization = memoization
+
+        # Return value
+        self.return_value = None
 
 class Node(BaseNode):
     """Class representing a Graphviz node"""
@@ -66,14 +65,16 @@ class Node(BaseNode):
         """Node value getter
 
         Returns:
-            Any: Node value as a tuple
+            tuple: Node value as a tuple
         """
 
         return (*self.args, *self.kwargs.items(),)
 
-    @property
-    def label(self) -> str:
+    def label(self, show_result: bool=False) -> str:
         """Node label getter
+
+        Args:
+            show_result (bool, optional): Add the node result. Defaults to False.
 
         Returns:
             str: Node label as a string
@@ -89,7 +90,12 @@ class Node(BaseNode):
 
             ret.append(s)
 
-        return ", ".join(ret)
+        ret = ", ".join(ret)
+
+        if show_result:
+            ret += f"\n({self.return_value})"
+
+        return ret
 
     @property
     def attrs(self) -> Dict[str, str]:

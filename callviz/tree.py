@@ -1,8 +1,11 @@
 """tree module"""
 
+from typing import Any
+
 import graphviz
 
 from .node import Node
+from .utility import try_get_copy
 
 class BaseTree:
     """`Tree` parent object class"""
@@ -66,6 +69,16 @@ class BaseTree:
 
         return True
 
+    def set_return_value(self, value: Any):
+        """Set the the return_value member of the current node
+
+        Args:
+            value (Any): Value
+        """
+        assert hasattr(value, "__str__")
+
+        self.__current.return_value = try_get_copy(value)
+
     def _debug(self):
         """BFS used to display line by line"""
 
@@ -99,7 +112,7 @@ class Tree(graphviz.Graph, BaseTree):
     def __init__(self, _format="png"):
         super().__init__(format=_format)
 
-    def process(self):
+    def process(self, show_node_result: bool, show_link_value: bool):
         """Link every node with Graphviz"""
 
         def dfs(node: Node):
@@ -109,9 +122,6 @@ class Tree(graphviz.Graph, BaseTree):
                 node (Node): Node
             """
 
-            if node.childrens == {}:
-                return
-
             if node.parent is None:
                 for children in node.childrens.values():
                     dfs(children)
@@ -119,12 +129,26 @@ class Tree(graphviz.Graph, BaseTree):
                 return
 
             # Parent
-            self.node(node.name, node.label, **node.attrs)
+            self.node(
+                node.name,
+                node.label(show_node_result),
+                **node.attrs,
+            )
 
             # Childrens
             for children in node.childrens.values():
-                self.node(children.name, children.label, **children.attrs)
-                self.edge(node.name, children.name)
+                self.node(
+                    children.name,
+                    children.label(show_node_result),
+                    **children.attrs,
+                )
+
+                label = None
+
+                if show_link_value:
+                    label = str(children.return_value)
+
+                self.edge(node.name, children.name, label=label)
 
                 dfs(children)
 
