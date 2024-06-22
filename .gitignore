@@ -166,3 +166,7 @@ a.py
 fib*
 *.svg
 test*
+
+/result
+/out
+/.direnv
