@@ -2,6 +2,8 @@
 
 [![lint](https://github.com/theobori/callviz/actions/workflows/lint.yml/badge.svg)](https://github.com/theobori/callviz/actions/workflows/lint.yml) [![build](https://github.com/theobori/callviz/actions/workflows/build.yml/badge.svg)](https://github.com/theobori/callviz/actions/workflows/build.yml) [![publish](https://github.com/theobori/callviz/actions/workflows/publish.yml/badge.svg)](https://github.com/theobori/callviz/actions/workflows/publish.yml)
 
+[![built with nix](https://builtwithnix.org/badge.svg)](https://builtwithnix.org)
+
 It is a Python decorator that will help you visualizate the function calls, in particular for the recursive ones. Under the hood [Graphviz](https://graphviz.org/) is used to generate the graph.
 
 ## 📖 Build and run

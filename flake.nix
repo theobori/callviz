@@ -21,7 +21,7 @@
         { pkgs }:
         {
           default = pkgs.callPackage ./. {
-            inherit (pkgs.python311.pkgs)
+            inherit (pkgs.python3Packages)
               buildPythonPackage
               setuptools
               wheel
@@ -38,8 +38,8 @@
             venvDir = ".venv";
             packages =
               with pkgs;
-              [ python311 ]
-              ++ (with pkgs.python311Packages; [
+              [ python3 ]
+              ++ (with pkgs.python3Packages; [
                 pip
                 venvShellHook
                 graphviz
