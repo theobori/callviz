@@ -38,7 +38,10 @@
             venvDir = ".venv";
             packages =
               with pkgs;
-              [ python3 ]
+              [
+                python3
+                graphviz
+              ]
               ++ (with pkgs.python3Packages; [
                 pip
                 venvShellHook

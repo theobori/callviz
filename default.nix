@@ -19,6 +19,8 @@ buildPythonPackage rec {
 
   propagatedBuildInputs = [ graphviz ];
 
+  pythonImportsCheck = [ "callviz" ];
+
   meta = {
     changelog = "https://github.com/theobori/callviz/releases/tag/v${version}";
     description = "It is a Python decorator that will help you visualizate the function calls, in particular for the recursive ones.";
